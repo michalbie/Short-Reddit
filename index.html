@@ -4,8 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Short Reddit</title>
+    <link rel="stylesheet" type="text/css" href="style/styles.css" />
+    <script src="/logic/app.js" defer></script>
 </head>
 <body>
-    
+    <template id="post">
+        <div class="post-container">
+            <h2>Question</h2>
+        </div>
+    </template>
+
+    <header id="header">
+        <section id="logo">
+            <h3>Short Reddit</h3>
+        </section>
+
+        <form id="subreddit-select-form">
+            <div>
+                <label>Subreddit:</label>
+                <input id="subreddit" type="text" value="AskReddit" required>
+            </div>
+            
+            <div>
+                <label>Posts type:</label>
+                <select id="select-posts-types">
+                    <option value="Hot">Hot</option>
+                    <option value="Top">Top</option>
+                    <option value="New">New</option>
+                </select> 
+            </div>
+            
+            <div>
+                <label>Posts limit:</label>
+                <input id="posts-limit" value="50" type="number" max=900 required>
+            </div>
+
+            <div>
+                <input type="submit" value="Search">
+            </div>
+        </form>
+    </header>
+
+    <section id="grid-container">
+        
+    </section>
 </body>
 </html>
