@@ -1,15 +1,24 @@
+
 const postsPerRequest = 100
 
 var responses = []
+var loadingAnimation
 
 const handleSubmit = (e) => {
-    responses = []
+    const resetPage = () => {
+        responses = []     
+        document.getElementById("grid-container").innerHTML = ""
+    }
+
+    resetPage()
     e.preventDefault()
     const subreddit = document.getElementById("subreddit").value
     const postsType = document.getElementById("select-posts-types").value
     const postsLimit = document.getElementById("posts-limit").value
+    playLoadingAnimation()
     fetchPosts(subreddit, postsType, postsLimit)
 }
+
 
 const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
     console.log(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
@@ -27,8 +36,10 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
         return
     }
 
+    clearLoadingAnimation()
     loadData(responses, postsLimit)
 }
+
 
 const loadData = (responses, postsLimit) => {
     const allPosts = []
@@ -38,8 +49,10 @@ const loadData = (responses, postsLimit) => {
         allPosts.push(...response.data.children)
     });
 
-    allPosts.forEach(({data: {title, url}}) => {
-        allPostsData[url] = {title}
+    let i=0
+    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media}}) => {
+        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media}
+        i++
     })
 
     console.log(allPosts)
@@ -48,41 +61,34 @@ const loadData = (responses, postsLimit) => {
 }
 
 
-
 const generatePosts = (allPosts, postsLimit) => {
-    document.getElementById("grid-container").innerHTML = ""
 
-    let template = document.querySelector('#post');
+    let template = document.querySelector('#post')
+
     for(let i=0; i<postsLimit; i++){
         let clone = template.content.cloneNode(true);
         clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[i]]["title"]
         document.getElementById("grid-container").appendChild(clone)
     }
 
-    const gridElements = document.getElementById("grid-container").querySelectorAll(".post-container")
+    const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container")
+
     for(let i=0; i<postsLimit; i++){
-        gridElements[i].addEventListener("mousedown", () => {
-            console.log(Object.keys(allPosts)[i])
-            window.open(Object.keys(allPosts)[i],`mywindow${i}`)
+        post_containers[i].addEventListener("mousedown", () => {
+            window.open("https://reddit.com" + allPosts[Object.keys(allPosts)[i]]["permalink"],`mywindow${i}`)
         })
-    }
 
-    /*for(let i=0; i<postsLimit; i++){
-        let template = document.querySelector('#post');
-        let clone = template.content.cloneNode(true);
-        clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[i]]["title"]
-        let answers = clone.querySelectorAll(".answer-container")
-        for(let j=0; j<5; j++){
-            answers[j].innerHTML = allPosts[Object.keys(allPosts)[i]]["answers"][j] + "<br><br>"
+        if(allPosts[Object.keys(allPosts)[i]].url_overridden_by_dest != null && allPosts[Object.keys(allPosts)[i]].url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
+            createImage(post_containers, i, allPosts)
+        } else if(allPosts[Object.keys(allPosts)[i]].is_video == true){
+            createVideo(post_containers, i, allPosts)
         }
-        document.getElementById("grid-container").appendChild(clone)
-    }*/
+    }
 }
 
-const fetchAnswers = async (allPosts, postsLimit) => {
+const fetchAnswers = async (allPosts, postsLimit) => { //not used actually
     for(let j=0; j<postsLimit; j++){
-        const key = Object.keys(allPosts)[j]
-        const url = key.slice(0, -1)
+        const url = Object.keys(allPosts)[j].slice(0, -1)
         const response = await fetch(`${url}.json`)
         const responseJSON = await response.json()
         const answers = []
@@ -93,5 +99,10 @@ const fetchAnswers = async (allPosts, postsLimit) => {
     }
 }
 
+
 const subredditSelectForm = document.getElementById("subreddit-select-form")
 subredditSelectForm.addEventListener("submit", handleSubmit)
+
+//TODO
+//Load more... feature
+//Load  images from posts that shares other posts

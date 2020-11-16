@@ -31,14 +31,28 @@
   background-color: #735F5F;
   display: grid;
   margin-top: 40px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 #grid-container .post-container {
   padding: 10px;
   background-color: #EAC2C2;
   margin: 20px;
   box-shadow: 2px 2px 4px black;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
 }
 #grid-container .post-container:hover {
   cursor: pointer;
+}
+#grid-container .post-container img,
+#grid-container video {
+  width: 90%;
+  align-self: center;
+  margin: 10px;
+}
+#loading-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
