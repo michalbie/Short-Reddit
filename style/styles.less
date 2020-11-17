@@ -39,7 +39,7 @@
     background-color: #735F5F;
     display:grid;
     margin-top: 40px;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     .post-container{
         padding: 10px;
@@ -52,14 +52,31 @@
         flex-direction: column;
     }
 
+    .post-container h2{
+        min-height: 5%;
+    }
+
     .post-container:hover{
         cursor: pointer;
     }
 
     .post-container img, video{
-        width: 90%;
+        max-width: 95%;
+        max-height: 800px;
         align-self: center;
         margin: 10px;
+        margin-bottom: 20px;
+    }
+
+    .post-container iframe{
+        height: 90%;
+        width: 100%;
+        min-height: 500px;
+        max-height: 800px;
+        align-self: center;
+        margin: 10px;
+        margin-bottom: 20px;
+        display: block;     
     }
 }
 

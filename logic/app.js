@@ -24,10 +24,12 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
     console.log(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
         after ? "&after=" + after : ""
     }`)
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
-        after ? "&after=" + after : ""
-    }`)
 
+    
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
+    after ? "&after=" + after : ""
+    }`)
+    
     const responseJSON = await response.json()
     responses.push(responseJSON)
 
@@ -38,6 +40,7 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
 
     clearLoadingAnimation()
     loadData(responses, postsLimit)
+    
 }
 
 
@@ -50,8 +53,8 @@ const loadData = (responses, postsLimit) => {
     });
 
     let i=0
-    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media, crosspost_parent_list, preview}}) => {
-        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list, preview}
+    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media, crosspost_parent_list}}) => {
+        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list}
         i++
     })
 
@@ -65,7 +68,6 @@ const generatePosts = (allPosts, postsLimit) => {
 
     let template = document.querySelector('#post')
     let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length
-    console.log("limit: " + limit)
 
     for(let i=0; i < limit; i++){
         let clone = template.content.cloneNode(true);
@@ -84,29 +86,21 @@ const generatePosts = (allPosts, postsLimit) => {
 
         if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
             createImage(post_containers[i], currentPost)
-        } else if(currentPost.is_video == true){
-            createVideo(post_containers[i], currentPost, currentPost.media)
+        } else if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(gifv)$/) != null){
+            createGifv(post_containers[i], currentPost, currentPost.url_overridden_by_dest)
+        }else if(currentPost.is_video == true){
+            createVideo(post_containers[i], currentPost, currentPost.media.reddit_video)
         } else if(currentPost.crosspost_parent_list != null && currentPost.crosspost_parent_list[0].is_video == true){
-            createVideo(post_containers[i], currentPost, currentPost.crosspost_parent_list[0].media)
-        } else if(currentPost.preview.reddit_video_preview != null){
-            createVideo(post_containers[i], currentPost, currentPost.preview.reddit_video_preview)
-        }
+            createVideo(post_containers[i], currentPost, currentPost.crosspost_parent_list[0].media.reddit_video)
+        } else if(currentPost.media != null && currentPost.media.oembed != null){
+            createIFrame(post_containers[i], currentPost, currentPost.media.oembed, true)
+        } else if(currentPost.url_overridden_by_dest != null){
+            createIFrame(post_containers[i], currentPost, currentPost.url_overridden_by_dest, false)
+        }/*else if(currentPost.media == null){
+            post_containers[i].style.display = "none"
+        }*/
     }
 }
-
-const fetchAnswers = async (allPosts, postsLimit) => { //not used actually
-    for(let j=0; j<postsLimit; j++){
-        const url = Object.keys(allPosts)[j].slice(0, -1)
-        const response = await fetch(`${url}.json`)
-        const responseJSON = await response.json()
-        const answers = []
-
-        for(let i=0; i<5; i++) answers.push(responseJSON[1].data.children[i].data.body)
-        console.log(answers)
-        allPosts[Object.keys(allPosts)[j]]["answers"] = answers
-    }
-}
-
 
 const subredditSelectForm = document.getElementById("subreddit-select-form")
 subredditSelectForm.addEventListener("submit", handleSubmit)
