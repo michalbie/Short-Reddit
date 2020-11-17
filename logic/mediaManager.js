@@ -1,11 +1,11 @@
 
-const createImage = (post_containers, postIndex, allPosts) => {
+const createImage = (postContainer, postData) => {
     const image = document.createElement("img")
-    image.src = allPosts[Object.keys(allPosts)[postIndex]].url_overridden_by_dest
-    post_containers[postIndex].appendChild(image)
+    image.src = postData.url_overridden_by_dest
+    postContainer.appendChild(image)
 }
 
-const createVideo = (post_containers, postIndex, allPosts) => {
+const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const video = document.createElement("video")
     const audio = document.createElement("audio")
@@ -42,13 +42,13 @@ const createVideo = (post_containers, postIndex, allPosts) => {
         })
 
         const videoSource = document.createElement("source")
-        videoSource.src = allPosts[Object.keys(allPosts)[postIndex]].media.reddit_video.fallback_url
+        videoSource.src = postMediaContainer.fallback_url
         videoSource.type = "video/mp4"
         video.appendChild(videoSource)
     }
 
     const configureAudio = () => {
-        let urlCut = allPosts[Object.keys(allPosts)[postIndex]].media.reddit_video.fallback_url.split("DASH_")[0]
+        let urlCut = postMediaContainer.fallback_url.split("DASH_")[0]
         let audioUrl = `${urlCut}DASH_audio.mp4?source=fallback`
         
         const audioSource = document.createElement("source")
@@ -59,5 +59,6 @@ const createVideo = (post_containers, postIndex, allPosts) => {
     
     configureVideo()
     configureAudio()
-    post_containers[postIndex].appendChild(video)
+    console.log(video)
+    postContainer.appendChild(video)
 }

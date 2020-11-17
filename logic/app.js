@@ -50,8 +50,8 @@ const loadData = (responses, postsLimit) => {
     });
 
     let i=0
-    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media}}) => {
-        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media}
+    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media, crosspost_parent_list, preview}}) => {
+        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list, preview}
         i++
     })
 
@@ -64,8 +64,10 @@ const loadData = (responses, postsLimit) => {
 const generatePosts = (allPosts, postsLimit) => {
 
     let template = document.querySelector('#post')
+    let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length
+    console.log("limit: " + limit)
 
-    for(let i=0; i<postsLimit; i++){
+    for(let i=0; i < limit; i++){
         let clone = template.content.cloneNode(true);
         clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[i]]["title"]
         document.getElementById("grid-container").appendChild(clone)
@@ -73,15 +75,21 @@ const generatePosts = (allPosts, postsLimit) => {
 
     const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container")
 
-    for(let i=0; i<postsLimit; i++){
+    for(let i=0; i < limit; i++){
+        const currentPost = allPosts[Object.keys(allPosts)[i]]
+
         post_containers[i].addEventListener("mousedown", () => {
             window.open("https://reddit.com" + allPosts[Object.keys(allPosts)[i]]["permalink"],`mywindow${i}`)
         })
 
-        if(allPosts[Object.keys(allPosts)[i]].url_overridden_by_dest != null && allPosts[Object.keys(allPosts)[i]].url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
-            createImage(post_containers, i, allPosts)
-        } else if(allPosts[Object.keys(allPosts)[i]].is_video == true){
-            createVideo(post_containers, i, allPosts)
+        if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
+            createImage(post_containers[i], currentPost)
+        } else if(currentPost.is_video == true){
+            createVideo(post_containers[i], currentPost, currentPost.media)
+        } else if(currentPost.crosspost_parent_list != null && currentPost.crosspost_parent_list[0].is_video == true){
+            createVideo(post_containers[i], currentPost, currentPost.crosspost_parent_list[0].media)
+        } else if(currentPost.preview.reddit_video_preview != null){
+            createVideo(post_containers[i], currentPost, currentPost.preview.reddit_video_preview)
         }
     }
 }
@@ -106,3 +114,5 @@ subredditSelectForm.addEventListener("submit", handleSubmit)
 //TODO
 //Load more... feature
 //Load  images from posts that shares other posts
+//Autoplay videos on viewport and pause these which are  not
+//mute video
