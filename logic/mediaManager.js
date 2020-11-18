@@ -72,7 +72,6 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const configureVideo = () => {
         video.controls = "true"
-        video.autoplay = "true"
 
         video.addEventListener("canplay", playVideoSynchronously)
         video.addEventListener("pause", playVideoSynchronously)
@@ -122,7 +121,6 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
 const createGifv = (postContainer, postData, postMediaContainer) => {
     const video = document.createElement("video")
     video.controls = "true"
-    video.autoplay = "true"
     let toMp4 = postMediaContainer.replace(".gifv", ".mp4")
     video.setAttribute("media-src", toMp4)
     mediaObserver.observe(video)
