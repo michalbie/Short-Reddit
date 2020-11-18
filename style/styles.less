@@ -1,11 +1,16 @@
 @main-color: #FF5640;
-@secondary-color: #804D46;
+@secondary-color: rgb(54, 54, 54);
+@post-font-color: rgb(138, 138, 138);
 @background: #1F2122;
 
 *{
     padding: 0;
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: @background;
 }
 
 #header{
@@ -63,6 +68,7 @@
 
     .post-container h2{
         min-height: 5%;
+        color: @post-font-color;
     }
 
     .post-container:hover{
