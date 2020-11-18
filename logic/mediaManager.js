@@ -27,6 +27,22 @@ const unloadMedia = media => {
 }
 
 
+const identifyPostContent = (post_container, currentPost) => {
+    if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
+        createImage(post_container, currentPost)
+    } else if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(gifv)$/) != null){
+        createGifv(post_container, currentPost, currentPost.url_overridden_by_dest)
+    }else if(currentPost.is_video == true){
+        createVideo(post_container, currentPost, currentPost.media.reddit_video)
+    } else if(currentPost.crosspost_parent_list != null && currentPost.crosspost_parent_list[0].is_video == true){
+        createVideo(post_container, currentPost, currentPost.crosspost_parent_list[0].media.reddit_video)
+    } else if(currentPost.media != null && currentPost.media.oembed != null){
+        createIFrame(post_container, currentPost, currentPost.media.oembed, true)
+    } else if(currentPost.url_overridden_by_dest != null){
+        createIFrame(post_container, currentPost, currentPost.url_overridden_by_dest, false)
+    }
+}
+
 const createImage = (postContainer, postData) => {
     const image = document.createElement("img")
     image.setAttribute("media-src", postData.url_overridden_by_dest)
@@ -41,7 +57,6 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const playVideoSynchronously = (e) => {
         if(e.type  == "canplay"){
-            console.log("CAN BE PLAUED")
             video.addEventListener("play", (ev) => {
                 ev.preventDefault()
                 if(video.readyState == 4){
@@ -57,6 +72,7 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const configureVideo = () => {
         video.controls = "true"
+        video.autoplay = "true"
 
         video.addEventListener("canplay", playVideoSynchronously)
         video.addEventListener("pause", playVideoSynchronously)
@@ -90,14 +106,13 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
 const createIFrame = (postContainer, postData, postMediaContainer, embedded) => {
     const iframe = document.createElement("iframe")
-    //iframe.src = postMediaContainer.html.split("src=\"")[1].split("\"")[0]
     iframe.allowFullscreen = true
+
     if(embedded == true){
         let link = postMediaContainer.html.split("src=\"")[1].split("\"")[0]
         iframe.setAttribute("media-src", link)
     } else {
         iframe.setAttribute("media-src", postMediaContainer)
-        console.log("url is " + postMediaContainer)
     }
     mediaObserver.observe(iframe)
 
@@ -107,6 +122,7 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
 const createGifv = (postContainer, postData, postMediaContainer) => {
     const video = document.createElement("video")
     video.controls = "true"
+    video.autoplay = "true"
     let toMp4 = postMediaContainer.replace(".gifv", ".mp4")
     video.setAttribute("media-src", toMp4)
     mediaObserver.observe(video)

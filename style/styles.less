@@ -1,5 +1,6 @@
-@main-color: lightcoral;
-@secondary-color: #EAC2C2;
+@main-color: #FF5640;
+@secondary-color: #804D46;
+@background: #1F2122;
 
 *{
     padding: 0;
@@ -11,7 +12,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: lightcoral;
+    background-color: @main-color;
     justify-content: space-between;
     padding: 10px 30px 10px 30px;
     position: fixed;
@@ -36,10 +37,10 @@
 }
 
 #grid-container{
-    background-color: #735F5F;
+    background-color: @background;
     display:grid;
     margin-top: 40px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     .post-container{
         padding: 10px;

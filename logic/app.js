@@ -25,7 +25,6 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
         after ? "&after=" + after : ""
     }`)
 
-    
     const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
     after ? "&after=" + after : ""
     }`)
@@ -84,21 +83,7 @@ const generatePosts = (allPosts, postsLimit) => {
             window.open("https://reddit.com" + allPosts[Object.keys(allPosts)[i]]["permalink"],`mywindow${i}`)
         })
 
-        if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(jpeg|jpg|gif|png)$/) != null){
-            createImage(post_containers[i], currentPost)
-        } else if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(gifv)$/) != null){
-            createGifv(post_containers[i], currentPost, currentPost.url_overridden_by_dest)
-        }else if(currentPost.is_video == true){
-            createVideo(post_containers[i], currentPost, currentPost.media.reddit_video)
-        } else if(currentPost.crosspost_parent_list != null && currentPost.crosspost_parent_list[0].is_video == true){
-            createVideo(post_containers[i], currentPost, currentPost.crosspost_parent_list[0].media.reddit_video)
-        } else if(currentPost.media != null && currentPost.media.oembed != null){
-            createIFrame(post_containers[i], currentPost, currentPost.media.oembed, true)
-        } else if(currentPost.url_overridden_by_dest != null){
-            createIFrame(post_containers[i], currentPost, currentPost.url_overridden_by_dest, false)
-        }/*else if(currentPost.media == null){
-            post_containers[i].style.display = "none"
-        }*/
+        identifyPostContent(post_containers[i], currentPost)
     }
 }
 
@@ -106,7 +91,4 @@ const subredditSelectForm = document.getElementById("subreddit-select-form")
 subredditSelectForm.addEventListener("submit", handleSubmit)
 
 //TODO
-//Load more... feature
-//Load  images from posts that shares other posts
-//Autoplay videos on viewport and pause these which are  not
-//mute video
+//play video in viewport(muted) (use second observer maybe)
