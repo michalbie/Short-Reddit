@@ -7,7 +7,9 @@ var loadingAnimation
 const handleSubmit = (e) => {
     const resetPage = () => {
         responses = []     
-        document.getElementById("grid-container").innerHTML = ""
+        let grid = document.getElementById("grid-container")
+        let columns = grid.querySelectorAll(".column-container")
+        columns.forEach(column => column.innerHTML = "")
     }
 
     resetPage()
@@ -57,7 +59,6 @@ const loadData = (responses, postsLimit) => {
         i++
     })
 
-    console.log(allPosts)
     console.log(allPostsData)
     generatePosts(allPostsData, postsLimit)
 }
@@ -67,11 +68,18 @@ const generatePosts = (allPosts, postsLimit) => {
 
     let template = document.querySelector('#post')
     let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length
+    let columnsContainers = document.getElementById("grid-container").querySelectorAll(".column-container")
 
-    for(let i=0; i < limit; i++){
-        let clone = template.content.cloneNode(true);
-        clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[i]]["title"]
-        document.getElementById("grid-container").appendChild(clone)
+    const postsPerColumn = limit / columnsContainers.length
+    let lastPostIndex = 0
+
+    for(let i=0; i < columnsContainers.length; i++){
+        while(lastPostIndex < (i != columnsContainers.length-1 ? postsPerColumn*(i+1) : limit)){
+            let clone = template.content.cloneNode(true);
+            clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[lastPostIndex]]["title"]
+            columnsContainers[i].appendChild(clone)
+            lastPostIndex++;
+        } 
     }
 
     const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container")
@@ -92,3 +100,5 @@ subredditSelectForm.addEventListener("submit", handleSubmit)
 
 //TODO
 //play video in viewport(muted) (use second observer maybe)
+//add possibility for multiple subreddits
+//hide settings in hidden sidebar

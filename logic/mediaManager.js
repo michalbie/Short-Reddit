@@ -1,7 +1,7 @@
 
 const observerOptions = {
-    threshold: 0.001,
-    rootMargin: "1800px 0px 1800px 0px"
+    threshold: 0.00001,
+    rootMargin: "200px 0px 200px 0px"
 }
 
 const mediaObserver = new IntersectionObserver((entries, mediaObserver) => {
@@ -16,9 +16,25 @@ const mediaObserver = new IntersectionObserver((entries, mediaObserver) => {
 }, observerOptions)
 
 const loadMedia = media => {
-    media.src = media.getAttribute("media-src")
     media.onload = function() {
         if (this.height != 0) media.height = this.height
+        if (this.width != 0) media.width = this.width
+        
+        media.parentElement.style.height = media.parentElement.querySelector("h2").offsetHeight + this.height
+    }
+    media.src = media.getAttribute("media-src")
+    
+    if(media.src.match(/\.(gif)$/) != null){
+        const observeSizeChange = setInterval(() => {
+            if(media.src !=  media.getAttribute("media-src")){
+                media.src = media.getAttribute("media-src")
+            }
+            console.log(media.height,  media.src, media.getAttribute("media-src"), media.parentElement)
+            if (media.height > 0){
+                media.height = media.height
+                clearInterval(observeSizeChange)
+            }
+        }, 1000)
     }
 }
 
@@ -46,8 +62,8 @@ const identifyPostContent = (post_container, currentPost) => {
 const createImage = (postContainer, postData) => {
     const image = document.createElement("img")
     image.setAttribute("media-src", postData.url_overridden_by_dest)
-    mediaObserver.observe(image)
     postContainer.appendChild(image)
+    mediaObserver.observe(image)
 }
 
 const createVideo = (postContainer, postData, postMediaContainer) => {
@@ -82,7 +98,6 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
             audio.currentTime = video.currentTime
         })
         video.setAttribute("media-src", postMediaContainer.fallback_url)
-        mediaObserver.observe(video)
     }
 
     const configureAudio = () => {
@@ -100,6 +115,7 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
     configureAudio()
     
     postContainer.appendChild(video)
+    mediaObserver.observe(video)
 }
 
 
@@ -113,9 +129,8 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
     } else {
         iframe.setAttribute("media-src", postMediaContainer)
     }
-    mediaObserver.observe(iframe)
-
     postContainer.appendChild(iframe)
+    mediaObserver.observe(iframe)
 }
 
 const createGifv = (postContainer, postData, postMediaContainer) => {
@@ -123,7 +138,6 @@ const createGifv = (postContainer, postData, postMediaContainer) => {
     video.controls = "true"
     let toMp4 = postMediaContainer.replace(".gifv", ".mp4")
     video.setAttribute("media-src", toMp4)
-    mediaObserver.observe(video)
-
     postContainer.appendChild(video)
+    mediaObserver.observe(video)
 }
