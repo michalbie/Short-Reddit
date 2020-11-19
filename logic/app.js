@@ -4,6 +4,10 @@ const postsPerRequest = 100
 var responses = []
 var loadingAnimation
 
+function showInitialContent(){
+    document.getElementById("submit-btn").click()
+}
+
 const handleSubmit = (e) => {
     const resetPage = () => {
         responses = []     

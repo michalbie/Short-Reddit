@@ -10,7 +10,7 @@
     <script src="/logic/informationManager.js" defer></script>
     <script src="/logic/mediaManager.js" defer></script>
 </head>
-<body>
+<body onload="showInitialContent()">
     <template id="post">
         <div class="post-container">
             <h2>Question</h2>
@@ -25,7 +25,7 @@
         <form id="subreddit-select-form">
             <div>
                 <label>Subreddit:</label>
-                <input id="subreddit" type="text" value="AskReddit" required>
+                <input id="subreddit" type="text" value="pics" required>
             </div>
             
             <div>
@@ -43,7 +43,7 @@
             </div>
 
             <div>
-                <input type="submit" value="Search">
+                <input id="submit-btn" type="submit" value="Search">
             </div>
         </form>
     </header>
