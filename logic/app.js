@@ -29,10 +29,6 @@ const handleSubmit = (e) => {
 
 
 const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
-    console.log(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
-        after ? "&after=" + after : ""
-    }`)
-
     const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
     after ? "&after=" + after : ""
     }`)
@@ -65,7 +61,6 @@ const loadData = (responses, postsLimit) => {
         i++
     })
 
-    console.log(allPostsData)
     generatePosts(allPostsData, postsLimit)
 }
 
@@ -107,4 +102,3 @@ subredditSelectForm.addEventListener("submit", handleSubmit)
 //TODO
 //play video in viewport(muted) (use second observer maybe)
 //add possibility for multiple subreddits
-//hide settings in hidden sidebar
