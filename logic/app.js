@@ -4,7 +4,8 @@ const postsPerRequest = 100
 var responses = []
 var loadingAnimation
 
-function showInitialContent(){
+function prepareApp(){
+    prepareSidebar()
     document.getElementById("submit-btn").click()
 }
 
@@ -14,6 +15,7 @@ const handleSubmit = (e) => {
         let grid = document.getElementById("grid-container")
         let columns = grid.querySelectorAll(".column-container")
         columns.forEach(column => column.innerHTML = "")
+        hideSidebar()
     }
 
     resetPage()
@@ -27,10 +29,6 @@ const handleSubmit = (e) => {
 
 
 const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
-    console.log(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
-        after ? "&after=" + after : ""
-    }`)
-
     const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
     after ? "&after=" + after : ""
     }`)
@@ -63,7 +61,6 @@ const loadData = (responses, postsLimit) => {
         i++
     })
 
-    console.log(allPostsData)
     generatePosts(allPostsData, postsLimit)
 }
 
@@ -105,4 +102,3 @@ subredditSelectForm.addEventListener("submit", handleSubmit)
 //TODO
 //play video in viewport(muted) (use second observer maybe)
 //add possibility for multiple subreddits
-//hide settings in hidden sidebar
