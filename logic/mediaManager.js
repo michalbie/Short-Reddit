@@ -17,25 +17,29 @@ const mediaObserver = new IntersectionObserver((entries, mediaObserver) => {
 
 const loadMedia = media => {
     media.onload = function() {
-        if (this.height != 0) media.height = this.height
-        if (this.width != 0) media.width = this.width
-        
-        media.parentElement.style.height = media.parentElement.querySelector("h2").offsetHeight + this.height
+        if(media.height != 0 && media.width != 0){
+            media.parentElement.style.paddingTop = (media.height / media.width * 100) + "%"
+        } 
+        else if(media.clientHeight != 0 && media.clientWidth != 0){
+            media.parentElement.style.paddingTop = (media.clientHeight / media.clientWidth * 100) + "%"
+        } 
+        else if(media.getAttribute("class") == "iframe-media") {
+            media.parentElement.style.paddingTop = "66.6%"
+        }
     }
     media.src = media.getAttribute("media-src")
-    
-    if(media.src.match(/\.(gif)$/) != null){
-        const observeSizeChange = setInterval(() => {
-            if(media.src !=  media.getAttribute("media-src")){
-                media.src = media.getAttribute("media-src")
-            }
-            console.log(media.height,  media.src, media.getAttribute("media-src"), media.parentElement)
-            if (media.height > 0){
-                media.height = media.height
-                clearInterval(observeSizeChange)
-            }
-        }, 1000)
-    }
+
+    const observeSizeChange = setInterval(() => {
+        //console.log(media, "LOADING")
+        if(media.src != media.getAttribute("media-src")){
+            media.src = media.getAttribute("media-src")
+        }
+        if(media.clientHeight && media.clientWidth){
+            //console.log(media.clientWidth)
+            media.parentElement.style.paddingTop = (media.clientHeight / media.clientWidth * 100) + "%"
+            clearInterval(observeSizeChange)
+        }
+    }, 1000)
 }
 
 const unloadMedia = media => {
@@ -48,7 +52,7 @@ const identifyPostContent = (post_container, currentPost) => {
         createImage(post_container, currentPost)
     } else if(currentPost.url_overridden_by_dest != null && currentPost.url_overridden_by_dest.match(/\.(gifv)$/) != null){
         createGifv(post_container, currentPost, currentPost.url_overridden_by_dest)
-    }else if(currentPost.is_video == true){
+    } else if(currentPost.is_video == true){
         createVideo(post_container, currentPost, currentPost.media.reddit_video)
     } else if(currentPost.crosspost_parent_list != null && currentPost.crosspost_parent_list[0].is_video == true){
         createVideo(post_container, currentPost, currentPost.crosspost_parent_list[0].media.reddit_video)
@@ -62,7 +66,8 @@ const identifyPostContent = (post_container, currentPost) => {
 const createImage = (postContainer, postData) => {
     const image = document.createElement("img")
     image.setAttribute("media-src", postData.url_overridden_by_dest)
-    postContainer.appendChild(image)
+    image.setAttribute("class", "media")
+    postContainer.querySelector(".media-section").appendChild(image)
     mediaObserver.observe(image)
 }
 
@@ -70,6 +75,7 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const video = document.createElement("video")
     const audio = document.createElement("audio")
+    video.setAttribute("class", "media")
 
     const playVideoSynchronously = (e) => {
         if(e.type  == "canplay"){
@@ -114,7 +120,7 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
     configureVideo()
     configureAudio()
     
-    postContainer.appendChild(video)
+    postContainer.querySelector(".media-section").appendChild(video)
     mediaObserver.observe(video)
 }
 
@@ -122,6 +128,7 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 const createIFrame = (postContainer, postData, postMediaContainer, embedded) => {
     const iframe = document.createElement("iframe")
     iframe.allowFullscreen = true
+    iframe.setAttribute("class", "iframe-media")
 
     if(embedded == true){
         let link = postMediaContainer.html.split("src=\"")[1].split("\"")[0]
@@ -129,7 +136,7 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
     } else {
         iframe.setAttribute("media-src", postMediaContainer)
     }
-    postContainer.appendChild(iframe)
+    postContainer.querySelector(".media-section").appendChild(iframe)
     mediaObserver.observe(iframe)
 }
 
@@ -138,6 +145,7 @@ const createGifv = (postContainer, postData, postMediaContainer) => {
     video.controls = "true"
     let toMp4 = postMediaContainer.replace(".gifv", ".mp4")
     video.setAttribute("media-src", toMp4)
-    postContainer.appendChild(video)
+    video.setAttribute("class", "media")
+    postContainer.querySelector(".media-section").appendChild(video)
     mediaObserver.observe(video)
 }
