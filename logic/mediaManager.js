@@ -30,12 +30,12 @@ const loadMedia = media => {
     media.src = media.getAttribute("media-src")
 
     const observeSizeChange = setInterval(() => {
-        console.log(media, "LOADING")
+        //console.log(media, "LOADING")
         if(media.src != media.getAttribute("media-src")){
             media.src = media.getAttribute("media-src")
         }
         if(media.clientHeight && media.clientWidth){
-            console.log(media.clientWidth)
+            //console.log(media.clientWidth)
             media.parentElement.style.paddingTop = (media.clientHeight / media.clientWidth * 100) + "%"
             clearInterval(observeSizeChange)
         }

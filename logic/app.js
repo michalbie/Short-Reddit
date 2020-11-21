@@ -4,7 +4,8 @@ const postsPerRequest = 100
 var responses = []
 var loadingAnimation
 
-function showInitialContent(){
+function prepareApp(){
+    prepareSidebar()
     document.getElementById("submit-btn").click()
 }
 
@@ -14,6 +15,7 @@ const handleSubmit = (e) => {
         let grid = document.getElementById("grid-container")
         let columns = grid.querySelectorAll(".column-container")
         columns.forEach(column => column.innerHTML = "")
+        hideSidebar()
     }
 
     resetPage()

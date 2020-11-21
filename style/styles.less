@@ -19,34 +19,88 @@ body{
     align-items: center;
     background-color: @main-color;
     justify-content: space-between;
-    padding: 10px 30px 10px 30px;
+    padding: 10px 30px 10px 10px;
     position: fixed;
     width: 100%;
+    height: 5vh;
     top:0;
-    z-index: 20;
+    z-index: 2;
+
+    #button-wrapper{
+        margin-right: 25px;
+    }
+    #button-wrapper:hover{
+        cursor: pointer;
+        transform: scale(0.95);
+    }
+
+    #menu-icon{
+        height: 25px;
+        width: 25px;
+    }
+}
+
+#sidebar{
+    position:fixed;
+    z-index: 3;
+    right: -300px;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #EAE8E0;
+    transition: right 0.5s;
+
+    #close-icon{
+        width: 24px;
+        height: auto;
+    }
+
+    .sidebar-title{
+        font-size: 25px;
+        font-weight: bold;
+        align-self: center;
+        margin-top: 10px;
+    }
 
     #subreddit-select-form{
         display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-        margin-right: 50px;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
 
         div{
-            margin-left: 30px;
+            margin-top: 30px;
+            width: 100%;
         }
 
-        #select-types{
-            width: 100px;
+        #select-posts-types{
+            width: 200px;
+        }
+
+        .center-content-wrapper{
+            display: flex;
+            justify-content: center;
         }
     }
+
+    #subreddit-select-form .form-label{
+        display: inline-block;
+        font-size: 20px;
+    }
+
+    #subreddit-select-form .input{
+        display: inline-block;
+        font-size: 20px;
+    }
 }
+
 
 #grid-container{
     background-color: @background;
     display:flex;
     flex-direction: row;
-    margin-top: 40px;
+    margin-top: 5vh;
 }
 
 .column-container{
@@ -70,8 +124,12 @@ body{
 
     .post-container h2{
         min-height: 5%;
-        font-size: 30px;
+        font-size: 20px;
         color: @post-font-color;
+    }
+
+    .post-container .post-title{
+        max-width: 100%;
     }
 
     .post-container .media-section{
@@ -82,7 +140,6 @@ body{
     .post-container .media-section .media{
         position: absolute;
         top: 0;
-        left: 0;
         width:95%;
         height:auto;
         align-self: center;
@@ -98,7 +155,7 @@ body{
         position: absolute;
         top: 0;
         left: 0;
-;
+
         width: 100%;
         height: 100%;
         
@@ -112,4 +169,145 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
+}
+
+
+@media all and (max-width: 6500px){
+    .column-container .post-container h2{
+        font-size: 72px;
+    }
+    #header #logo{
+        font-size: 30px;
+    }
+    #header #menu-icon{
+        height: 70px;
+        width: 70px;
+    }
+
+    .column-container .post-container .media-section .media{
+        left: 0;
+        right: 0;
+        margin-left: auto; 
+        margin-right: auto;
+    }
+
+    #sidebar .sidebar-title{
+        font-size: 40px;
+        font-weight: bold;
+        align-self: center;
+        margin-top: 10px;
+    }
+
+    #sidebar #subreddit-select-form #select-posts-types{
+        width: 200px;
+    }
+
+    #sidebar #subreddit-select-form .form-label{
+        display: inline-block;
+        font-size: 35px;
+    }
+
+    #sidebar #subreddit-select-form .input{
+        display: inline-block;
+        font-size: 35px;
+    }
+
+}
+
+
+@media all and (max-width: 3200px){
+    .column-container .post-container h2{
+        font-size: 20px;
+    }
+    #header #logo{
+        font-size: 20px;
+    }
+    #header #menu-icon{
+        height: 25px;
+        width: 25px;
+    }
+
+    #sidebar .sidebar-title{
+        font-size: 25px;
+        font-weight: bold;
+        align-self: center;
+        margin-top: 10px;
+    }
+
+    #sidebar #subreddit-select-form div{
+        margin-top: 10px;
+    }
+
+    #sidebar #subreddit-select-form #select-posts-types{
+        width: 100px;
+    }
+
+    #sidebar #subreddit-select-form .form-label{
+        display: inline-block;
+        font-size: 15px;
+    }
+
+    #sidebar #subreddit-select-form .input{
+        display: inline-block;
+        font-size: 15px;
+    }
+    
+}
+
+@media all and (max-width: 1100px){
+    #grid-container{
+        display:flex;
+        flex-direction: column;
+        margin-top: 40px;
+        margin-left: 30%;
+        margin-right: 30%;
+
+        .column-container{
+            width: 100%;
+        }
+    }
+    #header #logo{
+        font-size: 15px;
+    }
+
+    #sidebar .sidebar-title{
+        font-size: 20px;
+        font-weight: bold;
+        align-self: center;
+        margin-top: 10px;
+    }
+
+    #sidebar #subreddit-select-form div{
+        margin-top: 10px;
+    }
+
+    #sidebar #subreddit-select-form .form-label{
+        display: inline-block;
+        font-size: 10px;
+    }
+
+    #sidebar #subreddit-select-form .input{
+        display: inline-block;
+        font-size: 10px;
+    }
+}
+
+
+
+@media all and (max-width: 600px){
+    #grid-container{
+        display:flex;
+        flex-direction: column;
+        margin-top: 40px;
+        margin-left: 0;
+        margin-right: 0;
+
+        .column-container{
+            width: 100%;
+        }
+    }
+
+    #header{
+        height: 2vh;
+    }
 }
