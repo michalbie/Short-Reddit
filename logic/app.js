@@ -3,95 +3,87 @@ import * as mediaManager from "./modules/mediaManager.js";
 import * as animationManager from "./modules/animationManager.js";
 import * as sidebarManager from "./modules/sidebarManager.js";
 
+const postsPerRequest = 100;
 
-const postsPerRequest = 100
+var responses = [];
 
-var responses = []
-
-function prepareApp(){
-    sidebarManager.prepareSidebar()
-    document.getElementById("submit-btn").click()
+function prepareApp() {
+	sidebarManager.prepareSidebar();
+	document.getElementById("submit-btn").click();
 }
 
 const handleSubmit = (e) => {
-    const resetPage = () => {
-        responses = []     
-        let grid = document.getElementById("grid-container")
-        let columns = grid.querySelectorAll(".column-container")
-        columns.forEach(column => column.innerHTML = "")
-        sidebarManager.hideSidebar()
-    }
+	const resetPage = () => {
+		responses = [];
+		let grid = document.getElementById("grid-container");
+		let columns = grid.querySelectorAll(".column-container");
+		columns.forEach((column) => (column.innerHTML = ""));
+		sidebarManager.hideSidebar();
+	};
 
-    resetPage()
-    e.preventDefault()
-    const subreddit = document.getElementById("subreddit").value
-    const postsType = document.getElementById("select-posts-types").value
-    const postsLimit = document.getElementById("posts-limit").value
-    animationManager.playLoadingAnimation()
-    fetchPosts(subreddit, postsType, postsLimit)
-}
-
+	resetPage();
+	e.preventDefault();
+	const subreddit = document.getElementById("subreddit").value;
+	const postsType = document.getElementById("select-posts-types").value;
+	const postsLimit = document.getElementById("posts-limit").value;
+	animationManager.playLoadingAnimation();
+	fetchPosts(subreddit, postsType, postsLimit);
+};
 
 const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${
-    after ? "&after=" + after : ""
-    }`)
-    
-    const responseJSON = await response.json()
-    responses.push(responseJSON)
+	const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${after ? "&after=" + after : ""}`);
 
-    if(responseJSON.data.after && responses.length < Math.ceil(postsLimit/postsPerRequest)){
-        fetchPosts(subreddit, postsType, postsLimit, responseJSON.data.after)
-        return
-    }
+	const responseJSON = await response.json();
+	responses.push(responseJSON);
 
-    animationManager.clearLoadingAnimation()
-    loadData(responses, postsLimit)
-    
-}
+	if (responseJSON.data.after && responses.length < Math.ceil(postsLimit / postsPerRequest)) {
+		fetchPosts(subreddit, postsType, postsLimit, responseJSON.data.after);
+		return;
+	}
 
+	animationManager.clearLoadingAnimation();
+	loadData(responses, postsLimit);
+};
 
 const loadData = (responses, postsLimit) => {
-    const allPosts = []
-    let allPostsData = {}
+	const allPosts = [];
+	let allPostsData = {};
 
-    responses.forEach(response => {
-        allPosts.push(...response.data.children)
-    });
+	responses.forEach((response) => {
+		allPosts.push(...response.data.children);
+	});
 
-    let i=0
-    allPosts.forEach(({data: {title, permalink, url_overridden_by_dest = null, is_video, media, crosspost_parent_list}}) => {
-        allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list}
-        i++
-    })
+	let i = 0;
+	allPosts.forEach(({ data: { title, permalink, url_overridden_by_dest = null, is_video, media, crosspost_parent_list } }) => {
+		allPostsData[i] = { title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list };
+		i++;
+	});
 
-    generatePosts(allPostsData, postsLimit)
-}
-
+	generatePosts(allPostsData, postsLimit);
+};
 
 const generatePosts = (allPosts, postsLimit) => {
+	let template = document.querySelector("#post");
+	let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length;
+	let columnsContainers = document.getElementById("grid-container").querySelectorAll(".column-container");
+	const postsPerColumn = limit / columnsContainers.length;
 
-    let template = document.querySelector('#post')
-    let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length
-    let columnsContainers = document.getElementById("grid-container").querySelectorAll(".column-container")
-    const postsPerColumn = limit / columnsContainers.length
+	postCreator.createContainers(template, limit, columnsContainers, postsPerColumn, allPosts);
 
-    postCreator.createContainers(template, limit, columnsContainers, postsPerColumn, allPosts)
+	const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container");
 
-    const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container")
+	for (let i = 0; i < limit; i++) {
+		const currentPost = allPosts[Object.keys(allPosts)[i]];
 
-    for(let i=0; i < limit; i++){
-        const currentPost = allPosts[Object.keys(allPosts)[i]]
+		postCreator.addLink(currentPost, post_containers[i], i);
+		postCreator.initAnswersSection(currentPost, post_containers[i]);
+		mediaManager.identifyPostContent(post_containers[i], currentPost);
+	}
+};
 
-        postCreator.addLink(currentPost, post_containers[i])
-        postCreator.initAnswersSection(currentPost, post_containers[i])
-        mediaManager.identifyPostContent(post_containers[i], currentPost)
-    }
-}
-
-const subredditSelectForm = document.getElementById("subreddit-select-form")
-subredditSelectForm.addEventListener("submit", handleSubmit)
-prepareApp()
+const subredditSelectForm = document.getElementById("subreddit-select-form");
+subredditSelectForm.addEventListener("submit", handleSubmit);
+prepareApp();
 
 //TODO
 //play video in viewport(muted) (use second observer maybe)
