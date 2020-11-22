@@ -1,5 +1,5 @@
 {
-    "prettier.printWidth": 300,
+    "prettier.printWidth": 140,
     "prettier.tabWidth": 4,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "files.autoSave": "afterDelay",
