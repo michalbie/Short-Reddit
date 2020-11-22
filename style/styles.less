@@ -111,7 +111,7 @@ body{
     width: 33.3%;
 
     .post-container{
-        padding: 10px;
+        padding: 40px;
         background-color: @secondary-color;
         margin: 10px;
         box-shadow: 2px 2px 4px black;
@@ -183,6 +183,7 @@ body{
         color: @post-font-color;
         bottom: 0;
         //margin-bottom: 15px;
+       
     }
 
     .post-container .toggle-answers-btn:hover{
@@ -194,6 +195,7 @@ body{
         width: 100%;
         color: @post-font-color;
         margin-top: 5px;
+        font-size: 20px;
     }
 
     .post-container .answer-wrapper .answer-index{
@@ -213,9 +215,14 @@ body{
     #header #logo{
         font-size: 30px;
     }
+
     #header #menu-icon{
         height: 70px;
         width: 70px;
+    }
+
+    .column-container .post-container{
+        padding: 40px;
     }
 
     .column-container .post-container .media-section .media{
@@ -246,6 +253,19 @@ body{
         font-size: 35px;
     }
 
+    .column-container .post-container .answers-btn-wrapper{
+        padding-top: 150px;
+    }
+
+    .column-container .post-container .toggle-answers-btn{
+        font-size: 70px;
+        border-radius: 15px;
+        padding: 20px;
+    }
+
+    .column-container .post-container .answer-wrapper{
+        font-size: 70px;
+    }
 }
 
 
@@ -253,12 +273,17 @@ body{
     .column-container .post-container h2{
         font-size: 20px;
     }
+
     #header #logo{
         font-size: 20px;
     }
     #header #menu-icon{
         height: 25px;
         width: 25px;
+    }
+
+    .column-container .post-container{
+        padding: 20px;
     }
 
     #sidebar .sidebar-title{
@@ -285,6 +310,20 @@ body{
         display: inline-block;
         font-size: 15px;
     }
+
+    .column-container .post-container .answers-btn-wrapper{
+        padding-top: 40px;
+    }
+
+    .column-container .post-container .toggle-answers-btn{
+        font-size: 20px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .column-container .post-container .answer-wrapper{
+        font-size: 20px;
+    }
     
 }
 
@@ -302,6 +341,10 @@ body{
     }
     #header #logo{
         font-size: 15px;
+    }
+
+    .column-container .post-container{
+        padding: 10px;
     }
 
     #sidebar .sidebar-title{
@@ -325,11 +368,9 @@ body{
         font-size: 10px;
     }
 
-   /*.column-container .post-container .answers-btn-wrapper{
-        position: relative;
-        height: 100%;
-        padding-top: 60px;
-    }*/
+    .column-container .post-container .answer-wrapper{
+        font-size: 18px;
+    }
 }
 
 
@@ -349,5 +390,9 @@ body{
 
     #header{
         height: 2vh;
+    }
+
+    .column-container .post-container .answer-wrapper{
+        font-size: 16px;
     }
 }

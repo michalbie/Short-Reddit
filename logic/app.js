@@ -117,7 +117,7 @@ const generatePosts = (allPosts, postsLimit) => {
     }
 }
 
-const fetchAnswers = async (currentPost, postContainer) => { //not used actually
+const fetchAnswers = async (currentPost, postContainer) => {
     const url = ("https://www.reddit.com" + currentPost.permalink).slice(0, -1)
     const response = await fetch(`${url}.json`)
     const responseJSON = await response.json()
