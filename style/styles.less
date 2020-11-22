@@ -116,10 +116,11 @@ body{
         margin: 10px;
         box-shadow: 2px 2px 4px black;
         border-radius: 4px;
-        min-height: 250px;
+        min-height: 150px;
 
         display: flex;
         flex-direction: column;
+        position: relative;
     }
 
     .post-container h2{
@@ -130,6 +131,7 @@ body{
 
     .post-container .post-title{
         max-width: 100%;
+        display: block;
     }
 
     .post-container .media-section{
@@ -162,6 +164,40 @@ body{
         align-self: center;
         margin-bottom: 20px;
         border: none;
+    }
+
+    .post-container .answers-btn-wrapper{
+        position: relative;
+        flex: 1;
+        padding-top: 40px;
+    }
+
+    .post-container .toggle-answers-btn{
+        position: absolute;
+        background-color: @background;
+        border-radius: 5px;
+        text-align: start;
+        font-size: 20px;
+        border: none;
+        padding: 5px;
+        color: @post-font-color;
+        bottom: 0;
+        //margin-bottom: 15px;
+    }
+
+    .post-container .toggle-answers-btn:hover{
+        cursor: pointer;
+        transform: scale(0.9);
+    }
+
+    .post-container .answer-wrapper{
+        width: 100%;
+        color: @post-font-color;
+        margin-top: 5px;
+    }
+
+    .post-container .answer-wrapper .answer-index{
+        color:white;
     }
 }
 
@@ -288,6 +324,12 @@ body{
         display: inline-block;
         font-size: 10px;
     }
+
+   /*.column-container .post-container .answers-btn-wrapper{
+        position: relative;
+        height: 100%;
+        padding-top: 60px;
+    }*/
 }
 
 

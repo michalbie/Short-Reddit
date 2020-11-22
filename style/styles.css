@@ -94,9 +94,10 @@ body {
   margin: 10px;
   box-shadow: 2px 2px 4px black;
   border-radius: 4px;
-  min-height: 250px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .column-container .post-container h2 {
   min-height: 5%;
@@ -105,6 +106,7 @@ body {
 }
 .column-container .post-container .post-title {
   max-width: 100%;
+  display: block;
 }
 .column-container .post-container .media-section {
   position: relative;
@@ -131,6 +133,34 @@ body {
   align-self: center;
   margin-bottom: 20px;
   border: none;
+}
+.column-container .post-container .answers-btn-wrapper {
+  position: relative;
+  flex: 1;
+  padding-top: 40px;
+}
+.column-container .post-container .toggle-answers-btn {
+  position: absolute;
+  background-color: #1F2122;
+  border-radius: 5px;
+  text-align: start;
+  font-size: 20px;
+  border: none;
+  padding: 5px;
+  color: #8a8a8a;
+  bottom: 0;
+}
+.column-container .post-container .toggle-answers-btn:hover {
+  cursor: pointer;
+  transform: scale(0.9);
+}
+.column-container .post-container .answer-wrapper {
+  width: 100%;
+  color: #8a8a8a;
+  margin-top: 5px;
+}
+.column-container .post-container .answer-wrapper .answer-index {
+  color: white;
 }
 #loading-label {
   position: absolute;
@@ -233,6 +263,11 @@ body {
     display: inline-block;
     font-size: 10px;
   }
+  /*.column-container .post-container .answers-btn-wrapper{
+        position: relative;
+        height: 100%;
+        padding-top: 60px;
+    }*/
 }
 @media all and (max-width: 600px) {
   #grid-container {

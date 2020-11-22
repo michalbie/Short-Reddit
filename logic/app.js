@@ -56,7 +56,7 @@ const loadData = (responses, postsLimit) => {
     });
 
     let i=0
-    allPosts.forEach(({data: {title, permalink, url, url_overridden_by_dest = null, is_video, media, crosspost_parent_list}}) => {
+    allPosts.forEach(({data: {title, permalink, url_overridden_by_dest = null, is_video, media, crosspost_parent_list}}) => {
         allPostsData[i] = {title, url_overridden_by_dest, permalink, is_video, media, crosspost_parent_list}
         i++
     })
@@ -92,8 +92,59 @@ const generatePosts = (allPosts, postsLimit) => {
             window.open("https://reddit.com" + allPosts[Object.keys(allPosts)[i]]["permalink"],`mywindow${i}`)
         })
 
+        const showAnswersButton = post_containers[i].querySelector(".toggle-answers-btn")
+        let answerSectionDisplay = post_containers[i].querySelector(".answers-section").style.display = "block"
+        let loadingAnswers = false
+
+        showAnswersButton.addEventListener("mousedown", (e) => {
+            e.stopPropagation()
+
+            if(!post_containers[i].querySelector(".answer-wrapper") && loadingAnswers == false){
+                loadingAnswers = true
+                fetchAnswers(currentPost, post_containers[i])
+            } else if(answerSectionDisplay == "block"){
+                post_containers[i].querySelector(".answers-section").style.display = "none"
+                answerSectionDisplay = "none"
+                console.log(1)
+            } else{
+                post_containers[i].querySelector(".answers-section").style.display = "block"
+                answerSectionDisplay = "block"
+                console.log(2)
+            }
+        })
+
         identifyPostContent(post_containers[i], currentPost)
     }
+}
+
+const fetchAnswers = async (currentPost, postContainer) => { //not used actually
+    const url = ("https://www.reddit.com" + currentPost.permalink).slice(0, -1)
+    const response = await fetch(`${url}.json`)
+    const responseJSON = await response.json()
+    const answers = []
+
+    for(let i=0; i<5; i++){
+        if(responseJSON[1].data.children[i]){
+            answers.push(responseJSON[1].data.children[i].data.body)
+        } else{
+            break
+        }
+    }
+    addAnswersToPost(answers, postContainer)
+}
+
+const addAnswersToPost = (answers, postContainer) => {
+    const addAnswerDiv = (answer, index) => {
+        let answerDiv = document.createElement("div")
+        answerDiv.setAttribute("class", "answer-wrapper")
+        answerDiv.innerHTML = `<b class="answer-index">${index+1}.</b> ${answer}`
+        postContainer.querySelector(".answers-section").appendChild(answerDiv)
+    }
+
+    answers.forEach(answer => {
+        let index = answers.indexOf(answer)
+        addAnswerDiv(answer, index)
+    })
 }
 
 const subredditSelectForm = document.getElementById("subreddit-select-form")
