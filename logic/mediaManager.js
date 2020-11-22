@@ -94,7 +94,6 @@ const createVideo = (postContainer, postData, postMediaContainer) => {
 
     const configureVideo = () => {
         video.controls = "true"
-
         video.addEventListener("canplay", playVideoSynchronously)
         video.addEventListener("pause", playVideoSynchronously)
         video.addEventListener("waiting", () => audio.pause())
