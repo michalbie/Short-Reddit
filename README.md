@@ -1,6 +1,7 @@
 # Short-Reddit
 Your favorite subreddit shown in the most condensed way.
-Checkout live: [Short-Reddit](https://michalbie.github.io/Short-Reddit/ "https://michalbie.github.io/Short-Reddit/")
+Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blank"> https://michalbie.github.io/Short-Reddit/ </a>
+
 
 ## Main features
 * Responsiveness
