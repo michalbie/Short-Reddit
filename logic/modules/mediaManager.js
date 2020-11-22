@@ -148,3 +148,5 @@ const createGifv = (postContainer, postData, postMediaContainer) => {
     postContainer.querySelector(".media-section").appendChild(video)
     mediaObserver.observe(video)
 }
+
+export {identifyPostContent}

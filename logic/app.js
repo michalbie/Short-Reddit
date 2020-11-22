@@ -1,11 +1,15 @@
+import * as postCreator from "./modules/postCreator.js";
+import * as mediaManager from "./modules/mediaManager.js";
+import * as animationManager from "./modules/animationManager.js";
+import * as sidebarManager from "./modules/sidebarManager.js";
+
 
 const postsPerRequest = 100
 
 var responses = []
-var loadingAnimation
 
 function prepareApp(){
-    prepareSidebar()
+    sidebarManager.prepareSidebar()
     document.getElementById("submit-btn").click()
 }
 
@@ -15,7 +19,7 @@ const handleSubmit = (e) => {
         let grid = document.getElementById("grid-container")
         let columns = grid.querySelectorAll(".column-container")
         columns.forEach(column => column.innerHTML = "")
-        hideSidebar()
+        sidebarManager.hideSidebar()
     }
 
     resetPage()
@@ -23,7 +27,7 @@ const handleSubmit = (e) => {
     const subreddit = document.getElementById("subreddit").value
     const postsType = document.getElementById("select-posts-types").value
     const postsLimit = document.getElementById("posts-limit").value
-    playLoadingAnimation()
+    animationManager.playLoadingAnimation()
     fetchPosts(subreddit, postsType, postsLimit)
 }
 
@@ -41,7 +45,7 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
         return
     }
 
-    clearLoadingAnimation()
+    animationManager.clearLoadingAnimation()
     loadData(responses, postsLimit)
     
 }
@@ -49,7 +53,7 @@ const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
 
 const loadData = (responses, postsLimit) => {
     const allPosts = []
-    allPostsData = {}
+    let allPostsData = {}
 
     responses.forEach(response => {
         allPosts.push(...response.data.children)
@@ -70,85 +74,24 @@ const generatePosts = (allPosts, postsLimit) => {
     let template = document.querySelector('#post')
     let limit = postsLimit < Object.keys(allPosts).length ? postsLimit : Object.keys(allPosts).length
     let columnsContainers = document.getElementById("grid-container").querySelectorAll(".column-container")
-
     const postsPerColumn = limit / columnsContainers.length
-    let lastPostIndex = 0
 
-    for(let i=0; i < columnsContainers.length; i++){
-        while(lastPostIndex < (i != columnsContainers.length-1 ? postsPerColumn*(i+1) : limit)){
-            let clone = template.content.cloneNode(true);
-            clone.querySelector("h2").innerHTML = allPosts[Object.keys(allPosts)[lastPostIndex]]["title"]
-            columnsContainers[i].appendChild(clone)
-            lastPostIndex++;
-        } 
-    }
+    postCreator.createContainers(template, limit, columnsContainers, postsPerColumn, allPosts)
 
     const post_containers = document.getElementById("grid-container").querySelectorAll(".post-container")
 
     for(let i=0; i < limit; i++){
         const currentPost = allPosts[Object.keys(allPosts)[i]]
 
-        post_containers[i].addEventListener("mousedown", () => {
-            window.open("https://reddit.com" + allPosts[Object.keys(allPosts)[i]]["permalink"],`mywindow${i}`)
-        })
-
-        const showAnswersButton = post_containers[i].querySelector(".toggle-answers-btn")
-        let answerSectionDisplay = post_containers[i].querySelector(".answers-section").style.display = "block"
-        let loadingAnswers = false
-
-        showAnswersButton.addEventListener("mousedown", (e) => {
-            e.stopPropagation()
-
-            if(!post_containers[i].querySelector(".answer-wrapper") && loadingAnswers == false){
-                loadingAnswers = true
-                fetchAnswers(currentPost, post_containers[i])
-            } else if(answerSectionDisplay == "block"){
-                post_containers[i].querySelector(".answers-section").style.display = "none"
-                answerSectionDisplay = "none"
-                console.log(1)
-            } else{
-                post_containers[i].querySelector(".answers-section").style.display = "block"
-                answerSectionDisplay = "block"
-                console.log(2)
-            }
-        })
-
-        identifyPostContent(post_containers[i], currentPost)
+        postCreator.addLink(currentPost, post_containers[i])
+        postCreator.initAnswersSection(currentPost, post_containers[i])
+        mediaManager.identifyPostContent(post_containers[i], currentPost)
     }
-}
-
-const fetchAnswers = async (currentPost, postContainer) => {
-    const url = ("https://www.reddit.com" + currentPost.permalink).slice(0, -1)
-    const response = await fetch(`${url}.json`)
-    const responseJSON = await response.json()
-    const answers = []
-
-    for(let i=0; i<5; i++){
-        if(responseJSON[1].data.children[i]){
-            answers.push(responseJSON[1].data.children[i].data.body)
-        } else{
-            break
-        }
-    }
-    addAnswersToPost(answers, postContainer)
-}
-
-const addAnswersToPost = (answers, postContainer) => {
-    const addAnswerDiv = (answer, index) => {
-        let answerDiv = document.createElement("div")
-        answerDiv.setAttribute("class", "answer-wrapper")
-        answerDiv.innerHTML = `<b class="answer-index">${index+1}.</b> ${answer}`
-        postContainer.querySelector(".answers-section").appendChild(answerDiv)
-    }
-
-    answers.forEach(answer => {
-        let index = answers.indexOf(answer)
-        addAnswerDiv(answer, index)
-    })
 }
 
 const subredditSelectForm = document.getElementById("subreddit-select-form")
 subredditSelectForm.addEventListener("submit", handleSubmit)
+prepareApp()
 
 //TODO
 //play video in viewport(muted) (use second observer maybe)
