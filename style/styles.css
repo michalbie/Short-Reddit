@@ -89,14 +89,15 @@ body {
   width: 33.3%;
 }
 .column-container .post-container {
-  padding: 10px;
+  padding: 40px;
   background-color: #363636;
   margin: 10px;
   box-shadow: 2px 2px 4px black;
   border-radius: 4px;
-  min-height: 250px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .column-container .post-container h2 {
   min-height: 5%;
@@ -105,6 +106,7 @@ body {
 }
 .column-container .post-container .post-title {
   max-width: 100%;
+  display: block;
 }
 .column-container .post-container .media-section {
   position: relative;
@@ -132,6 +134,35 @@ body {
   margin-bottom: 20px;
   border: none;
 }
+.column-container .post-container .answers-btn-wrapper {
+  position: relative;
+  flex: 1;
+  padding-top: 40px;
+}
+.column-container .post-container .toggle-answers-btn {
+  position: absolute;
+  background-color: #1F2122;
+  border-radius: 5px;
+  text-align: start;
+  font-size: 20px;
+  border: none;
+  padding: 5px;
+  color: #8a8a8a;
+  bottom: 0;
+}
+.column-container .post-container .toggle-answers-btn:hover {
+  cursor: pointer;
+  transform: scale(0.9);
+}
+.column-container .post-container .answer-wrapper {
+  width: 100%;
+  color: #8a8a8a;
+  margin-top: 5px;
+  font-size: 20px;
+}
+.column-container .post-container .answer-wrapper .answer-index {
+  color: white;
+}
 #loading-label {
   position: absolute;
 }
@@ -145,6 +176,9 @@ body {
   #header #menu-icon {
     height: 70px;
     width: 70px;
+  }
+  .column-container .post-container {
+    padding: 40px;
   }
   .column-container .post-container .media-section .media {
     left: 0;
@@ -169,6 +203,17 @@ body {
     display: inline-block;
     font-size: 35px;
   }
+  .column-container .post-container .answers-btn-wrapper {
+    padding-top: 150px;
+  }
+  .column-container .post-container .toggle-answers-btn {
+    font-size: 70px;
+    border-radius: 15px;
+    padding: 20px;
+  }
+  .column-container .post-container .answer-wrapper {
+    font-size: 70px;
+  }
 }
 @media all and (max-width: 3200px) {
   .column-container .post-container h2 {
@@ -180,6 +225,9 @@ body {
   #header #menu-icon {
     height: 25px;
     width: 25px;
+  }
+  .column-container .post-container {
+    padding: 20px;
   }
   #sidebar .sidebar-title {
     font-size: 25px;
@@ -201,6 +249,17 @@ body {
     display: inline-block;
     font-size: 15px;
   }
+  .column-container .post-container .answers-btn-wrapper {
+    padding-top: 40px;
+  }
+  .column-container .post-container .toggle-answers-btn {
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  .column-container .post-container .answer-wrapper {
+    font-size: 20px;
+  }
 }
 @media all and (max-width: 1100px) {
   #grid-container {
@@ -215,6 +274,9 @@ body {
   }
   #header #logo {
     font-size: 15px;
+  }
+  .column-container .post-container {
+    padding: 10px;
   }
   #sidebar .sidebar-title {
     font-size: 20px;
@@ -233,6 +295,9 @@ body {
     display: inline-block;
     font-size: 10px;
   }
+  .column-container .post-container .answer-wrapper {
+    font-size: 18px;
+  }
 }
 @media all and (max-width: 600px) {
   #grid-container {
@@ -247,5 +312,8 @@ body {
   }
   #header {
     height: 2vh;
+  }
+  .column-container .post-container .answer-wrapper {
+    font-size: 16px;
   }
 }
