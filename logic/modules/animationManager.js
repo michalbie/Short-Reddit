@@ -1,38 +1,57 @@
 var loadingAnimation
 
 const playLoadingAnimation = () => {
-    let text = document.createElement(`h2`)
-    text.setAttribute("id", "loading-label")
-    text.style.color = "#8A8A8A"
-    text.innerHTML = "Loading"
-    let dots = ""
-    document.getElementById("grid-container").appendChild(text)
+    let infoLabels = document.querySelectorAll(".info-label")
+    removeAllInfo(infoLabels)
 
-    const updateLoadingPosition = () => {
-        text.style.top = (window.innerHeight/2) - (text.clientHeight/2) + "px"
-        text.style.left = (window.innerWidth/2) - (text.clientWidth/2) + "px"
-    }
+    let info = createInfo("Loading")
+    let dots = ""
 
     const animate = () => {
-        text.innerHTML = "Loading" + dots
+        info.innerHTML = "Loading" + dots
         if(dots.length == 3) dots = ""
         dots += "."
     }
 
-    updateLoadingPosition()
     loadingAnimation = setInterval(animate, 300)
-
-    window.addEventListener("resize", () => {
-        updateLoadingPosition()
-    })
 }
 
 const clearLoadingAnimation = () => {
     clearInterval(loadingAnimation)
-    let loadingLabel = document.getElementById("loading-label")
-    loadingLabel.remove()
+    let infoLabels = document.querySelectorAll(".info-label")
+    removeAllInfo(infoLabels)
 }
 
+const showLoadingError = () => {
+    createInfo("Something went wrong!")
+}
 
-export {clearLoadingAnimation, playLoadingAnimation};
+const updateInfoPosition = (info) => {
+    info.style.top = (window.innerHeight/2) - (info.clientHeight/2) + "px"
+    info.style.left = (window.innerWidth/2) - (info.clientWidth/2) + "px"
+}
+
+const createInfo = (infoText) => {
+    let info = document.createElement(`h2`)
+    info.setAttribute("class", "info-label")
+    info.style.color = "#8A8A8A"
+    info.innerHTML = infoText
+    document.getElementById("grid-container").appendChild(info)
+    updateInfoPosition(info);
+
+    window.addEventListener("resize", () => {
+        updateInfoPosition(info);
+    })
+
+    return info;
+}
+
+const removeAllInfo = (info) => {
+    let infoArray = info
+    infoArray.forEach(element => {
+        element.remove()
+    });
+}
+
+export {clearLoadingAnimation, playLoadingAnimation, showLoadingError};
 
