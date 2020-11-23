@@ -57,8 +57,15 @@ body {
   padding: 10px;
 }
 #sidebar #subreddit-select-form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-top: 30px;
   width: 100%;
+  text-align: center;
+  /* center checkbox horizontally */
+  vertical-align: middle;
+  /* center checkbox vertically */
 }
 #sidebar #subreddit-select-form #select-posts-types {
   width: 200px;
@@ -74,6 +81,7 @@ body {
 #sidebar #subreddit-select-form .input {
   display: inline-block;
   font-size: 20px;
+  margin-left: 10px;
 }
 #grid-container {
   background-color: #1F2122;
@@ -295,6 +303,8 @@ body {
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 10px;
+    margin-left: 2px;
+    vertical-align: middle;
   }
   .column-container .post-container .answer-wrapper {
     font-size: 18px;

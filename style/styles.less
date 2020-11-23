@@ -70,8 +70,13 @@ body{
         padding: 10px;
 
         div{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             margin-top: 30px;
             width: 100%;
+            text-align: center; /* center checkbox horizontally */
+            vertical-align: middle; /* center checkbox vertically */
         }
 
         #select-posts-types{
@@ -92,6 +97,7 @@ body{
     #subreddit-select-form .input{
         display: inline-block;
         font-size: 20px;
+        margin-left: 10px;
     }
 }
 
@@ -367,6 +373,8 @@ body{
     #sidebar #subreddit-select-form .input{
         display: inline-block;
         font-size: 10px;
+        margin-left: 2px;
+        vertical-align: middle;
     }
 
     .column-container .post-container .answer-wrapper{
