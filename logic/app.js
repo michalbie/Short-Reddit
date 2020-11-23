@@ -6,6 +6,7 @@ import * as sidebarManager from "./modules/sidebarManager.js";
 const postsPerRequest = 100;
 
 var responses = [];
+var displayExternalSource = false;
 
 function prepareApp() {
 	sidebarManager.prepareSidebar();
@@ -26,6 +27,7 @@ const handleSubmit = (e) => {
 	const subreddit = document.getElementById("subreddit").value;
 	const postsType = document.getElementById("select-posts-types").value;
 	const postsLimit = document.getElementById("posts-limit").value;
+	displayExternalSource = document.getElementById("external-source").checked;
 	animationManager.playLoadingAnimation();
 	fetchPosts(subreddit, postsType, postsLimit);
 };
@@ -82,7 +84,7 @@ const generatePosts = (allPosts, postsLimit) => {
 
 		postCreator.addLink(currentPost, post_containers[i], i);
 		postCreator.initAnswersSection(currentPost, post_containers[i]);
-		mediaManager.identifyPostContent(post_containers[i], currentPost);
+		mediaManager.identifyPostContent(post_containers[i], currentPost, displayExternalSource);
 	}
 };
 
