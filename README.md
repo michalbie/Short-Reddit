@@ -27,3 +27,6 @@ Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blan
 ## Contribution
 Just follow 4-spaces intendation and max 140 characters per line. Everything else should be written like here [Style Guide](https://github.com/bevacqua/js 
 "bavacqua style guide"). If you want you can copy my [VSCode Editor Settings](.vscode "VSCode Editor Settings").
+
+## To do
+1. Redesign sidebar (with form inside)
