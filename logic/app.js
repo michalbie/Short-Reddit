@@ -31,18 +31,23 @@ const handleSubmit = (e) => {
 };
 
 const fetchPosts = async (subreddit, postsType, postsLimit, after) => {
-	const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${after ? "&after=" + after : ""}`);
+	try{
+		const response = await fetch(`https://www.reddit.com/r/${subreddit}/${postsType.toLowerCase()}.json?limit=100${after ? "&after=" + after : ""}`);
+		const responseJSON = await response.json();
+		responses.push(responseJSON);
 
-	const responseJSON = await response.json();
-	responses.push(responseJSON);
+		if (responseJSON.data.after && responses.length < Math.ceil(postsLimit / postsPerRequest)) {
+			fetchPosts(subreddit, postsType, postsLimit, responseJSON.data.after);
+			return;
+		}
 
-	if (responseJSON.data.after && responses.length < Math.ceil(postsLimit / postsPerRequest)) {
-		fetchPosts(subreddit, postsType, postsLimit, responseJSON.data.after);
-		return;
+		animationManager.clearLoadingAnimation();
+		loadData(responses, postsLimit);
+	} catch (error) {
+		animationManager.clearLoadingAnimation();
+		animationManager.showLoadingError();
 	}
-
-	animationManager.clearLoadingAnimation();
-	loadData(responses, postsLimit);
+	
 };
 
 const loadData = (responses, postsLimit) => {
