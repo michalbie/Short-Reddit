@@ -159,11 +159,12 @@ body {
   color: #8a8a8a;
   margin-top: 5px;
   font-size: 20px;
+  word-wrap: break-word;
 }
 .column-container .post-container .answer-wrapper .answer-index {
   color: white;
 }
-#loading-label {
+.info-label {
   position: absolute;
 }
 @media all and (max-width: 6500px) {

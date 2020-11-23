@@ -1,5 +1,7 @@
 # Short-Reddit
 Your favorite subreddit shown in the most condensed way.
+Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blank"> https://michalbie.github.io/Short-Reddit/ </a>
+
 
 ## Main features
 * Responsiveness
@@ -15,7 +17,6 @@ Your favorite subreddit shown in the most condensed way.
 ![Desktop](assets/screenshots/desktop1.png "Desktop")
 ![Desktop](assets/screenshots/desktop2.png "Desktop")
 
-
 ## Technologies used
 * HTML
 * [LessCSS](http://lesscss.org/ "LessCSS")
@@ -25,4 +26,7 @@ Your favorite subreddit shown in the most condensed way.
 
 ## Contribution
 Just follow 4-spaces intendation and max 140 characters per line. Everything else should be written like here [Style Guide](https://github.com/bevacqua/js 
-"bavacqua style guide"). If you want you can copy my [VSCode Editor Settings](.vscode "VSCode Editor Settings")
+"bavacqua style guide"). If you want you can copy my [VSCode Editor Settings](.vscode "VSCode Editor Settings"). I use [Prettier VSCode Extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for formatting code.
+
+## To do
+1. Redesign sidebar (with form inside)

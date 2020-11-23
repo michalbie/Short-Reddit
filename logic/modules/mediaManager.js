@@ -21,8 +21,14 @@ const loadMedia = media => {
 			media.parentElement.style.paddingTop = media.clientHeight / media.clientWidth * 100 + '%';
 		} else if (media.getAttribute('class') == 'iframe-media') {
 			media.parentElement.style.paddingTop = '66.6%';
-		}
+		} 
 	};
+
+	if(media.tagName == "VIDEO"){
+		media.addEventListener("loadedmetadata", ()=>{
+			media.parentElement.style.paddingTop = media.clientHeight / media.clientWidth * 100 + '%';
+		});
+	}
 
 	media.src = media.getAttribute('media-src');
 
