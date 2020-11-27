@@ -21,8 +21,14 @@ const loadMedia = media => {
 			media.parentElement.style.paddingTop = media.clientHeight / media.clientWidth * 100 + '%';
 		} else if (media.getAttribute('class') == 'iframe-media') {
 			media.parentElement.style.paddingTop = '66.6%';
-		}
+		} 
 	};
+
+	if(media.tagName == "VIDEO"){
+		media.addEventListener("canplay", ()=>{
+			media.parentElement.style.paddingTop = media.clientHeight / media.clientWidth * 100 + '%';
+		});
+	}
 
 	media.src = media.getAttribute('media-src');
 
@@ -42,7 +48,7 @@ const unloadMedia = media => {
 	media.src = '';
 };
 
-const identifyPostContent = (post_container, currentPost) => {
+const identifyPostContent = (post_container, currentPost, displayExternalSource) => {
 	const mediaTypes = {
 		image: function () {
 			let imgExtension = /\.(jpeg|jpg|gif|png)$/;
@@ -70,18 +76,19 @@ const identifyPostContent = (post_container, currentPost) => {
 				return true;
 			}
 		},
-		embedded_iframe: function () {
-			if (currentPost.media != null && currentPost.media.oembed != null) {
-				createIFrame(post_container, currentPost, currentPost.media.oembed, true);
-				return true;
-			}
-		},
 		iframe: function () {
-			if (currentPost.url_overridden_by_dest != null) {
+			console.log(displayExternalSource)
+			if (currentPost.url_overridden_by_dest != null && displayExternalSource == true) {
 				createIFrame(post_container, currentPost, currentPost.url_overridden_by_dest, false);
 				return true;
 			}
 		},
+		embedded_iframe: function () {
+			if (currentPost.media != null && currentPost.media.oembed != null && displayExternalSource == true) {
+				createIFrame(post_container, currentPost, currentPost.media.oembed, true);
+				return true;
+			}
+		}	
 	};
 
 	for (let type in mediaTypes) {

@@ -76,8 +76,15 @@ body {
   padding: 10px;
 }
 #sidebar #subreddit-select-form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-top: 30px;
   width: 100%;
+  text-align: center;
+  /* center checkbox horizontally */
+  vertical-align: middle;
+  /* center checkbox vertically */
 }
 #sidebar #subreddit-select-form #select-posts-types {
   width: 200px;
@@ -93,6 +100,7 @@ body {
 #sidebar #subreddit-select-form .input {
   display: inline-block;
   font-size: 20px;
+  margin-left: 10px;
 }
 #sidebar input::-webkit-outer-spin-button,
 #sidebar input::-webkit-inner-spin-button {
@@ -197,11 +205,12 @@ body {
   margin-top: 5px;
   font-size: 20px;
   font-family: "answersFont";
+  word-wrap: break-word;
 }
 .column-container .post-container .answer-wrapper .answer-index {
   color: white;
 }
-#loading-label {
+.info-label {
   position: absolute;
   font-family: "cabinRegular";
 }
@@ -333,6 +342,8 @@ body {
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 10px;
+    margin-left: 2px;
+    vertical-align: middle;
   }
   .column-container .post-container .answer-wrapper {
     font-size: 18px;
