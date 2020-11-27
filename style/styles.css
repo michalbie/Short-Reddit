@@ -115,6 +115,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   background-color: #a8a8a8;
+  margin-left: 0;
 }
 #sidebar #subreddit-select-form .center-content-wrapper #submit-btn {
   cursor: pointer;
@@ -219,7 +220,7 @@ body {
     font-size: 72px;
   }
   #header #logo {
-    font-size: 30px;
+    font-size: 50px;
   }
   #header #menu-icon {
     height: 70px;
@@ -233,6 +234,9 @@ body {
     right: 0;
     margin-left: auto;
     margin-right: auto;
+  }
+  #sidebar {
+    padding: 30px;
   }
   #sidebar .sidebar-title {
     font-size: 60px;
@@ -249,6 +253,7 @@ body {
   }
   #sidebar #subreddit-select-form .input {
     display: inline-block;
+    margin-left: 20px;
     font-size: 35px;
   }
   .column-container .post-container .answers-btn-wrapper {
@@ -277,6 +282,9 @@ body {
   .column-container .post-container {
     padding: 20px;
   }
+  #sidebar {
+    padding: 15px;
+  }
   #sidebar .sidebar-title {
     font-size: 25px;
     font-weight: bold;
@@ -296,6 +304,7 @@ body {
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 15px;
+    margin-left: 15px;
   }
   .column-container .post-container .answers-btn-wrapper {
     padding-top: 40px;
@@ -333,7 +342,7 @@ body {
     margin-top: 10px;
   }
   #sidebar #subreddit-select-form div {
-    margin-top: 10px;
+    margin-top: 20px;
   }
   #sidebar #subreddit-select-form .form-label {
     display: inline-block;
@@ -342,7 +351,7 @@ body {
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 10px;
-    margin-left: 2px;
+    margin-left: 10px;
     vertical-align: middle;
   }
   .column-container .post-container .answer-wrapper {
@@ -365,5 +374,11 @@ body {
   }
   .column-container .post-container .answer-wrapper {
     font-size: 16px;
+  }
+  #sidebar #subreddit-select-form .input {
+    display: inline-block;
+    font-size: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
   }
 }
