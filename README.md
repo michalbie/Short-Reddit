@@ -14,8 +14,8 @@ Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blan
 * Setting shown posts limit (up to 900 posts)
 
 ## App look
-![Desktop](assets/screenshots/desktop1.png "Desktop")
-![Desktop](assets/screenshots/desktop2.png "Desktop")
+![Desktop](assets/screenshots/desktop_1.png "Desktop")
+![Desktop](assets/screenshots/desktop_2.png "Desktop")
 
 ## Technologies used
 * HTML
