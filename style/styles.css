@@ -86,9 +86,6 @@ body {
   display: flex;
   justify-content: center;
 }
-#sidebar #subreddit-select-form input[tooltip] {
-  color: red;
-}
 #sidebar #subreddit-select-form .form-label {
   display: inline-block;
   font-size: 20px;
