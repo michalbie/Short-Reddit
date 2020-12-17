@@ -1,7 +1,18 @@
+@font-face {
+  font-family: cabinRegular;
+  src: url(../assets/fonts/Cabin/Cabin-Regular.ttf);
+}
+@font-face {
+  font-family: postsFont;
+  src: url(../assets/fonts/IBMPlexSans/IBMPlexSans-SemiBold.ttf);
+}
+@font-face {
+  font-family: answersFont;
+  src: url(../assets/fonts/IBMPlexSans/IBMPlexSans-Regular.ttf);
+}
 * {
   padding: 0;
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
 }
 body {
   background-color: #1F2122;
@@ -18,9 +29,13 @@ body {
   height: 5vh;
   top: 0;
   z-index: 2;
+  font-family: "cabinRegular" !important;
 }
 #header #button-wrapper {
   margin-right: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #header #button-wrapper:hover {
   cursor: pointer;
@@ -37,8 +52,12 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #EAE8E0;
+  background-color: #4b4b4b;
+  color: #dddddd;
+  font-family: cabinRegular;
   transition: right 0.5s;
+  box-shadow: 2px 4px 8px black;
+  /* Firefox */
 }
 #sidebar #close-icon {
   width: 24px;
@@ -83,6 +102,24 @@ body {
   font-size: 20px;
   margin-left: 10px;
 }
+#sidebar input::-webkit-outer-spin-button,
+#sidebar input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+#sidebar input[type=number] {
+  -moz-appearance: textfield;
+}
+#sidebar #subreddit-select-form .center-content-wrapper #submit-btn {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #a8a8a8;
+  margin-left: 0;
+}
+#sidebar #subreddit-select-form .center-content-wrapper #submit-btn {
+  cursor: pointer;
+}
 #grid-container {
   background-color: #1F2122;
   display: flex;
@@ -106,6 +143,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  font-family: "postsFont";
 }
 .column-container .post-container h2 {
   min-height: 5%;
@@ -167,6 +205,7 @@ body {
   color: #8a8a8a;
   margin-top: 5px;
   font-size: 20px;
+  font-family: "answersFont";
   word-wrap: break-word;
 }
 .column-container .post-container .answer-wrapper .answer-index {
@@ -174,13 +213,14 @@ body {
 }
 .info-label {
   position: absolute;
+  font-family: "cabinRegular";
 }
 @media all and (max-width: 6500px) {
   .column-container .post-container h2 {
     font-size: 72px;
   }
   #header #logo {
-    font-size: 30px;
+    font-size: 50px;
   }
   #header #menu-icon {
     height: 70px;
@@ -195,8 +235,11 @@ body {
     margin-left: auto;
     margin-right: auto;
   }
+  #sidebar {
+    padding: 30px;
+  }
   #sidebar .sidebar-title {
-    font-size: 40px;
+    font-size: 60px;
     font-weight: bold;
     align-self: center;
     margin-top: 30px;
@@ -206,10 +249,11 @@ body {
   }
   #sidebar #subreddit-select-form .form-label {
     display: inline-block;
-    font-size: 35px;
+    font-size: 45px;
   }
   #sidebar #subreddit-select-form .input {
     display: inline-block;
+    margin-left: 20px;
     font-size: 35px;
   }
   .column-container .post-container .answers-btn-wrapper {
@@ -238,6 +282,9 @@ body {
   .column-container .post-container {
     padding: 20px;
   }
+  #sidebar {
+    padding: 15px;
+  }
   #sidebar .sidebar-title {
     font-size: 25px;
     font-weight: bold;
@@ -245,18 +292,19 @@ body {
     margin-top: 10px;
   }
   #sidebar #subreddit-select-form div {
-    margin-top: 10px;
+    margin-top: 15px;
   }
   #sidebar #subreddit-select-form #select-posts-types {
     width: 100px;
   }
   #sidebar #subreddit-select-form .form-label {
     display: inline-block;
-    font-size: 15px;
+    font-size: 20px;
   }
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 15px;
+    margin-left: 15px;
   }
   .column-container .post-container .answers-btn-wrapper {
     padding-top: 40px;
@@ -294,16 +342,16 @@ body {
     margin-top: 10px;
   }
   #sidebar #subreddit-select-form div {
-    margin-top: 10px;
+    margin-top: 20px;
   }
   #sidebar #subreddit-select-form .form-label {
     display: inline-block;
-    font-size: 10px;
+    font-size: 15px;
   }
   #sidebar #subreddit-select-form .input {
     display: inline-block;
     font-size: 10px;
-    margin-left: 2px;
+    margin-left: 10px;
     vertical-align: middle;
   }
   .column-container .post-container .answer-wrapper {
@@ -322,9 +370,15 @@ body {
     width: 100%;
   }
   #header {
-    height: 2vh;
+    height: 3vh;
   }
   .column-container .post-container .answer-wrapper {
     font-size: 16px;
+  }
+  #sidebar #subreddit-select-form .input {
+    display: inline-block;
+    font-size: 10px;
+    margin-left: 8px;
+    vertical-align: middle;
   }
 }
