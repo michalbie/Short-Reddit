@@ -90,14 +90,9 @@ body{
         width: 100%;
         padding: 10px;
 
-        div{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-top: 30px;
+        label{
+            margin-top: 15px;
             width: 100%;
-            text-align: center; /* center checkbox horizontally */
-            vertical-align: middle; /* center checkbox vertically */
         }
 
         #select-posts-types{
@@ -164,7 +159,7 @@ body{
     .post-container{
         padding: 40px;
         background-color: @secondary-color;
-        margin: 10px;
+        margin: 25px;
         box-shadow: 2px 2px 4px black;
         border-radius: 4px;
         min-height: 150px;
@@ -264,6 +259,7 @@ body{
     font-family: "cabinRegular";
 }
 
+//I know I should use ems instead of px in font-sizes
 
 @media all and (max-width: 6500px){
     .column-container .post-container h2{
