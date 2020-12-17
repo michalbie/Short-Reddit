@@ -76,18 +76,18 @@ const identifyPostContent = (post_container, currentPost, displayExternalSource)
 				return true;
 			}
 		},
-		iframe: function () {
-			if (currentPost.url_overridden_by_dest != null && displayExternalSource == true) {
-				createIFrame(post_container, currentPost, currentPost.url_overridden_by_dest, false);
-				return true;
-			}
-		},
 		embedded_iframe: function () {
 			if (currentPost.media != null && currentPost.media.oembed != null && displayExternalSource == true) {
 				createIFrame(post_container, currentPost, currentPost.media.oembed, true);
 				return true;
 			}
-		}	
+		},
+		iframe: function () {
+			if (currentPost.url_overridden_by_dest != null && displayExternalSource == true) {
+				createIFrame(post_container, currentPost, currentPost.url_overridden_by_dest, false);
+				return true;
+			}
+		}
 	};
 
 	for (let type in mediaTypes) {
@@ -161,8 +161,13 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
 	iframe.setAttribute('class', 'iframe-media');
 
 	if (embedded == true) {
-		let link = postMediaContainer.html.split('src="')[1].split('"')[0];
-		iframe.setAttribute('media-src', link);
+		let link = ""
+		if( postMediaContainer.html.includes("cdn") ) {
+			link = 'h' + postMediaContainer.html.split('src=h')[1].split('&amp')[0];
+		} else {
+			link = postMediaContainer.html.split('src="')[1].split('"')[0];
+		}
+		iframe.setAttribute('media-src', decodeURIComponent(link));
 	} else {
 		iframe.setAttribute('media-src', postMediaContainer);
 	}

@@ -75,16 +75,9 @@ body {
   width: 100%;
   padding: 10px;
 }
-#sidebar #subreddit-select-form div {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 30px;
+#sidebar #subreddit-select-form label {
+  margin-top: 15px;
   width: 100%;
-  text-align: center;
-  /* center checkbox horizontally */
-  vertical-align: middle;
-  /* center checkbox vertically */
 }
 #sidebar #subreddit-select-form #select-posts-types {
   width: 200px;
@@ -136,7 +129,7 @@ body {
 .column-container .post-container {
   padding: 40px;
   background-color: #363636;
-  margin: 10px;
+  margin: 25px;
   box-shadow: 2px 2px 4px black;
   border-radius: 4px;
   min-height: 150px;
