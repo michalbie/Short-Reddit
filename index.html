@@ -39,29 +39,27 @@
         <p class="sidebar-title">Options</p>
 
         <form id="subreddit-select-form">
-            <div>
-                <label class="form-label">Subreddit:</label>
-                <input class="input" id="subreddit" type="text" value="pics" required>
-            </div>
-            
-            <div>
-                <label class="form-label">Posts type:</label>
+            <label class="form-label">Subreddit:
+                    <input class="input" id="subreddit" type="text" value="pics" required>
+            </label>
+                
+            <label class="form-label">Posts type:
                 <select class="input" id="select-posts-types">
                     <option value="Hot">Hot</option>
                     <option value="Top">Top</option>
                     <option value="New">New</option>
                 </select> 
-            </div>
+            </label>
             
-            <div>
-                <label class="form-label">Posts limit:</label>
+            <label class="form-label">Posts limit:
                 <input class="input" id="posts-limit" value="50" type="number" max=900 required>
-            </div>
+            </label>
 
-            <div>
-                <label class="form-label">Display external source content:</label>
+
+            <label class="form-label">Display external source content:
                 <input class="input" id="external-source" type="checkbox">
-            </div>
+            </label>
+
 
             <div class="center-content-wrapper">
                 <input class="input" id="submit-btn" type="submit" value="Search">

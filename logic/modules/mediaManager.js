@@ -77,7 +77,6 @@ const identifyPostContent = (post_container, currentPost, displayExternalSource)
 			}
 		},
 		iframe: function () {
-			console.log(displayExternalSource)
 			if (currentPost.url_overridden_by_dest != null && displayExternalSource == true) {
 				createIFrame(post_container, currentPost, currentPost.url_overridden_by_dest, false);
 				return true;
