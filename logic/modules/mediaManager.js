@@ -161,7 +161,7 @@ const createIFrame = (postContainer, postData, postMediaContainer, embedded) => 
 	iframe.setAttribute('class', 'iframe-media');
 
 	if (embedded == true) {
-		let link = ""
+		let link = "";
 		if( postMediaContainer.html.includes("cdn") ) {
 			link = 'h' + postMediaContainer.html.split('src=h')[1].split('&amp')[0];
 		} else {
