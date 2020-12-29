@@ -1,3 +1,4 @@
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/michalbie/Short-Reddit.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/michalbie/Short-Reddit/context:javascript)
 # Short-Reddit
 Your favorite subreddit shown in the most condensed way.
 Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blank"> https://michalbie.github.io/Short-Reddit/ </a>
