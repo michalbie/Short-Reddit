@@ -1,6 +1,6 @@
 # Short-Reddit &middot; ![GitHub](https://img.shields.io/github/license/michalbie/Short-Reddit) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/michalbie/Short-Reddit.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/michalbie/Short-Reddit/context:javascript)
 Your favorite subreddit shown in the most condensed way.
-Checkout live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blank"> https://michalbie.github.io/Short-Reddit/ </a>
+Check out live: <a href="https://michalbie.github.io/Short-Reddit/" target="_blank"> https://michalbie.github.io/Short-Reddit/ </a>
 
 
 ## Main features
